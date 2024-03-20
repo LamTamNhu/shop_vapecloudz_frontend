@@ -1,9 +1,10 @@
 import '../css/navbar.css'
+import {Link} from "react-router-dom";
 
 export function NavBar() {
     return (
-        <div style={{marginBottom:"4rem"}}>
-            <div className="container-fluid fixed-top">
+        <>
+            <div className="container-fluid">
                 <div className="row">
                     <img className="col-2"
                          src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
@@ -31,20 +32,24 @@ export function NavBar() {
                         </div>
                         <div className="container px-0">
                             <nav className="navbar navbar-light bg-white navbar-expand-xl">
-                                <a href="index.html" className="navbar-brand"><h1
-                                    className="madimi-one-regular main-color">VapeCloudz</h1></a>
+                                <Link to={"/"} className="navbar-brand"><h1
+                                    className="madimi-one-regular main-color">VapeCloudz</h1></Link>
                                 <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#navbarCollapse">
                                     <span className="fa fa-bars main-color"></span>
                                 </button>
                                 <div className="collapse navbar-collapse bg-white" id="navbarCollapse">
                                     <div className="navbar-nav mx-auto">
-                                        <a href="index.html" className="nav-item nav-link active">Home</a>
-                                        <a href="shop.html" className="nav-item nav-link">Shop</a>
-                                        <a href="shop-detail.html" className="nav-item nav-link">Shop Detail</a>
+                                        <Link to={"/"} className="nav-item nav-link">E-Liquid</Link>
+                                        <Link to={"/"} className="nav-item nav-link">Disposable Vapes</Link>
+                                        <Link to={"/"} className="nav-item nav-link">Vape Kits</Link>
+                                        <Link to={"/"} className="nav-item nav-link">Pod Kits</Link>
+                                        <Link to={"/"} className="nav-item nav-link">Tanks</Link>
+                                        <Link to={"/"} className="nav-item nav-link">Pods</Link>
+                                        <Link to={"/"} className="nav-item nav-link">Coils</Link>
                                         <div className="nav-item dropdown">
                                             <a href="#" className="nav-link dropdown-toggle"
-                                               data-bs-toggle="dropdown">Pages</a>
+                                               data-bs-toggle="dropdown">Accessories</a>
                                             <div className="dropdown-menu m-0 bg-secondary rounded-0">
                                                 <a href="cart.html" className="dropdown-item">Cart</a>
                                                 <a href="chackout.html" className="dropdown-item">Chackout</a>
@@ -100,6 +105,6 @@ export function NavBar() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

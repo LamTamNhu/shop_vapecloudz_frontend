@@ -1,23 +1,30 @@
 .navbar .dropdown-toggle::after {
-  border: none;
-  content: "\f107";
-  font-family: "Font Awesome 5 Free", serif;
-  font-weight: 700;
-  vertical-align: middle;
-  margin-left: 8px;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free", serif;
+    font-weight: 700;
+    vertical-align: middle;
+    margin-left: 8px;
 }
 
 .madimi-one-regular {
-  font-family: "Madimi One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Madimi One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .main-color {
-  color: #B78854;
+    color: #B78854;
 }
 
-.main-bg{
-  background-color: #B78854;
+.main-bg {
+    background-color: #B78854;
+}
+
+h2 {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
 }
 
