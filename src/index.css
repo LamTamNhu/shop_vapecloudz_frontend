@@ -28,3 +28,17 @@ h2 {
     font-style: normal;
 }
 
+.slick-slide {
+    padding: 0 15px;
+}
+
+.slick-list {
+    margin: 0 2em;
+}
+
+.format-content-body {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

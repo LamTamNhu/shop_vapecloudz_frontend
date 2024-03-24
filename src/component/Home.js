@@ -3,10 +3,24 @@ import slide_2 from "../images/2-2560x1110.jpg"
 import slide_3 from "../images/real 2560.jpg"
 import card_1 from "../images/freebaseee-1.webp"
 import styles from "../css/home.module.css"
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import {Link} from "react-router-dom";
 
 export function Home() {
+    const settings = {
+        arrows: true,
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        autoplay: true
+    };
     return (
         <>
+            {/*Main carousel*/}
             <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
@@ -38,7 +52,59 @@ export function Home() {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
-            <div className="container mt-3" align="center">
+
+            <div className="container-fluid featurs py-2">
+                <div className="container py-5">
+                    <div className="row g-4">
+                        <div className="col-md-6 col-lg-3">
+                            <div className="featurs-item text-center rounded bg-light p-4">
+                                <div className="featurs-icon btn-square rounded-circle bg-warning mb-3 mx-auto">
+                                    <i className="fas fa-car-side fa-3x text-white"></i>
+                                </div>
+                                <div className="featurs-content text-center">
+                                    <h5>Free Shipping</h5>
+                                    <p className="mb-0">Free on order over $50</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-lg-3">
+                            <div className="featurs-item text-center rounded bg-light p-4">
+                                <div className="featurs-icon btn-square rounded-circle bg-warning mb-3 mx-auto">
+                                    <i className="fas fa-user-shield fa-3x text-white"></i>
+                                </div>
+                                <div className="featurs-content text-center">
+                                    <h5>Security Payment</h5>
+                                    <p className="mb-0">100% security payment</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-lg-3">
+                            <div className="featurs-item text-center rounded bg-light p-4">
+                                <div className="featurs-icon btn-square rounded-circle bg-warning mb-3 mx-auto">
+                                    <i className="fas fa-exchange-alt fa-3x text-white"></i>
+                                </div>
+                                <div className="featurs-content text-center">
+                                    <h5>30 Day Return</h5>
+                                    <p className="mb-0">30 day money guarantee</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6 col-lg-3">
+                            <div className="featurs-item text-center rounded bg-light p-4">
+                                <div className="featurs-icon btn-square rounded-circle bg-warning mb-3 mx-auto">
+                                    <i className="fa fa-phone-alt fa-3x text-white"></i>
+                                </div>
+                                <div className="featurs-content text-center">
+                                    <h5>24/7 Support</h5>
+                                    <p className="mb-0">Support every time fast</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/*Categories*/}
+            <div className="container" align="center">
                 <h2 className="my-5 main-color">Shop by Category</h2>
                 <div className="row">
                     <div className={`col ${styles.container}`} style={{overflow: "hidden"}}>
@@ -55,13 +121,13 @@ export function Home() {
                     </div>
                 </div>
             </div>
-
+            {/*:Products showcase*/}
             <div className="container mt-3" align="center">
                 <h2 className="my-5 main-color">Bestsellers</h2>
                 <div className="row row-cols-4 g-4">
                     <div className="card col border-0">
                         <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
+                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
                             className="card-img-top card-img-bottom" alt="..."/>
                         <div className="card-body">
                             <p className="card-text">Some quick example text to build on the card title and make up the
@@ -73,7 +139,7 @@ export function Home() {
                     </div>
                     <div className="card col border-0">
                         <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
+                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
                             className="card-img-top card-img-bottom" alt="..."/>
                         <div className="card-body">
                             <p className="card-text">Some quick example text to build on the card title and make up the
@@ -85,7 +151,7 @@ export function Home() {
                     </div>
                     <div className="card col border-0">
                         <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
+                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
                             className="card-img-top card-img-bottom" alt="..."/>
                         <div className="card-body">
                             <p className="card-text">Some quick example text to build on the card title and make up the
@@ -97,7 +163,7 @@ export function Home() {
                     </div>
                     <div className="card col border-0">
                         <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
+                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
                             className="card-img-top card-img-bottom" alt="..."/>
                         <div className="card-body">
                             <p className="card-text">Some quick example text to build on the card title and make up the
@@ -115,7 +181,7 @@ export function Home() {
                 <div className="row row-cols-4 g-4">
                     <div className="card col border-0">
                         <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
+                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/r/i/riot-connex-disposable-vape-pineapple-ice_1.jpg"
                             className="card-img-top card-img-bottom" alt="..."/>
                         <div className="card-body">
                             <p className="card-text">Some quick example text to build on the card title and make up the
@@ -139,7 +205,7 @@ export function Home() {
                     </div>
                     <div className="card col border-0">
                         <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
+                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/r/i/riot-connex-disposable-vape-pineapple-ice_1.jpg"
                             className="card-img-top card-img-bottom" alt="..."/>
                         <div className="card-body">
                             <p className="card-text">Some quick example text to build on the card title and make up the
@@ -164,6 +230,73 @@ export function Home() {
                 </div>
                 <button className="btn btn-outline-warning main-bg text-light rounded">More</button>
             </div>
+            {/*Review carousel*/}
+            <div className="slider-container container">
+                <h2 className="my-5 main-color text-center">Latest user reviews</h2>
+                <Slider {...settings}>
+                    <div className="border border-3 rounded-4 p-3">
+                        <div className="d-flex justify-content-between mb-2">
+                            <span>John Smith</span>
+                            <span>24/03/2024</span>
+                        </div>
+                        <div className="d-flex pe-5">
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-secondary"></i>
+                        </div>
+                        <hr/>
+                        <p className="mb-3 fw-bold">Great pod</p>
+                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                            is an inexpensive and simple
+                            alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                            are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
+                        <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
+                    </div>
+                    <div className="border border-3 rounded-4 p-3">
+                        <div className="d-flex justify-content-between mb-2">
+                            <span>John Smith</span>
+                            <span>24/03/2024</span>
+                        </div>
+                        <div className="d-flex pe-5">
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-secondary"></i>
+                        </div>
+                        <hr/>
+                        <p className="mb-3 fw-bold">Great pod</p>
+                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                            is an inexpensive and simple
+                            alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                            are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
+                        <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
+                    </div>
+                    <div className="border border-3 rounded-4 p-3">
+                        <div className="d-flex justify-content-between mb-2">
+                            <span>John Smith</span>
+                            <span>24/03/2024</span>
+                        </div>
+                        <div className="d-flex pe-5">
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-warning"></i>
+                            <i className="fa-solid fa-star text-secondary"></i>
+                        </div>
+                        <hr/>
+                        <p className="mb-3 fw-bold">Great pod</p>
+                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                            is an inexpensive and simple
+                            alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                            are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
+                        <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
+                    </div>
+                </Slider>
+            </div>
+            {/*FAQ*/}
             <div className="container mt-3" align="center">
                 <h2 className="my-5 main-color">FAQs</h2>
                 <div className="row row-cols-2 g-4">
@@ -213,7 +346,15 @@ export function Home() {
                     </div>
                     <div className="col">
                         <h2>What Vape Coils Do I Need To Use?</h2>
-                        <p>Vape kits require coils to use, however you need to make sure you’re getting the right coils for your kit. Most kits have coils that are specifically used for that exact kit, however some brands have a generic coil that can be used in multiple versions of their kit. Some pod kits come with inbuilt coils in the pods so once you can buy a pack of pods and have the coils already installed and ready to go. More advanced sub ohm kits usually require specific coils that fit with the kit’s tank. If you’re buying a disposable kit, they come with e-liquid prefilled and coils already in the kit so they’re ready to go straight out the box. We’ve created an easy-to-use coil finder so you can check which coil you need for your kit.</p>
+                        <p>Vape kits require coils to use, however you need to make sure you’re getting the right coils
+                            for your kit. Most kits have coils that are specifically used for that exact kit, however
+                            some brands have a generic coil that can be used in multiple versions of their kit. Some pod
+                            kits come with inbuilt coils in the pods so once you can buy a pack of pods and have the
+                            coils already installed and ready to go. More advanced sub ohm kits usually require specific
+                            coils that fit with the kit’s tank. If you’re buying a disposable kit, they come with
+                            e-liquid prefilled and coils already in the kit so they’re ready to go straight out the box.
+                            We’ve created an easy-to-use coil finder so you can check which coil you need for your
+                            kit.</p>
                     </div>
                     <div className="col">
                         <h2>Will Vaping Help Me Quit Smoking?</h2>
@@ -227,76 +368,6 @@ export function Home() {
                     </div>
                 </div>
             </div>
-
-            {/*Footer*/}
-            <div className="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
-                <div className="container py-5">
-                    <div className="pb-4 mb-4">
-                        <div className="row g-4">
-                            <div className="col-lg-3">
-                                <h1 className="main-color mb-0">VapeCloudz</h1>
-                                <p className="text-secondary mb-0">Good price with quality</p>
-                            </div>
-                            <div className="col-lg-8">
-                                <div className="d-flex justify-content-end pt-3">
-                                    <a className="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
-                                        className="fab fa-twitter"></i></a>
-                                    <a className="btn btn-outline-secondary me-2 btn-md-square rounded-circle"
-                                       href=""><i className="fab fa-facebook-f"></i></a>
-                                    <a className="btn btn-outline-secondary me-2 btn-md-square rounded-circle"
-                                       href=""><i className="fab fa-youtube"></i></a>
-                                    <a className="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i
-                                        className="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row g-5">
-                        <div className="col-lg-3 col-md-6">
-                            <div className="footer-item">
-                                <h4 className="main-color mb-3">Why People Like us!</h4>
-                                <p className="mb-4">typesetting, remaining essentially unchanged. It was
-                                    popularised in the 1960s with the like Aldus PageMaker including of Lorem Ipsum.</p>
-                                <a href="" className="btn border-secondary py-2 px-4 rounded-pill text-primary">Read
-                                    More</a>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="d-flex flex-column text-start footer-item">
-                                <h4 className="main-color mb-3">Shop Info</h4>
-                                <a className="btn-link" href="">About Us</a>
-                                <a className="btn-link" href="">Contact Us</a>
-                                <a className="btn-link" href="">Privacy Policy</a>
-                                <a className="btn-link" href="">Terms & Condition</a>
-                                <a className="btn-link" href="">Return Policy</a>
-                                <a className="btn-link" href="">FAQs & Help</a>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="d-flex flex-column text-start footer-item">
-                                <h4 className="main-color mb-3">Account</h4>
-                                <a className="btn-link" href="">My Account</a>
-                                <a className="btn-link" href="">Shop details</a>
-                                <a className="btn-link" href="">Shopping Cart</a>
-                                <a className="btn-link" href="">Wishlist</a>
-                                <a className="btn-link" href="">Order History</a>
-                                <a className="btn-link" href="">International Orders</a>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <div className="footer-item">
-                                <h4 className="main-color mb-3">Contact</h4>
-                                <p>Address: 1429 Netus Rd, NY 48247</p>
-                                <p>Email: Example@gmail.com</p>
-                                <p>Phone: +0123 4567 8910</p>
-                                <p>Payment Accepted</p>
-                                <img src="" className="img-fluid" alt=""/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/*Footer End*/}
         </>
     )
 }

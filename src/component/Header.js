@@ -1,36 +1,16 @@
 import '../css/navbar.css'
 import {Link} from "react-router-dom";
 
-export function NavBar() {
+export function Header() {
     return (
         <>
-            <div className="container-fluid">
+            <div className="container-fluid mb-3">
                 <div className="row">
-                    <img className="col-2"
+                    <img style={{maxWidth: "200px"}} className="col-2"
                          src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
-                         alt="error" style={{maxWidth: "160px", maxHeight: "132px"}}/>
-                    <div className="col">
-                        <div className="container topbar main-bg d-none d-lg-block">
-                            <div className="d-flex justify-content-between">
-                                <div className="top-info ps-2">
-                                    <small className="me-3"><i
-                                        className="fas fa-map-marker-alt me-2 text-secondary"></i> <a
-                                        href="#" className="text-white">123 Street, New York</a></small>
-                                    <small className="me-3"><i className="fas fa-envelope me-2 text-secondary"></i><a
-                                        href="#"
-                                        className="text-white">Email@Example.com</a></small>
-                                </div>
-                                <div className="top-link pe-2">
-                                    <a href="#" className="text-white"><small className="text-white mx-2">Privacy
-                                        Policy</small>/</a>
-                                    <a href="#" className="text-white"><small className="text-white mx-2">Terms of
-                                        Use</small>/</a>
-                                    <a href="#" className="text-white"><small className="text-white ms-2">Sales and
-                                        Refunds</small></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="container px-0">
+                         alt="error"/>
+                    <div className="col px-5">
+                        <div className="container">
                             <nav className="navbar navbar-light bg-white navbar-expand-xl">
                                 <Link to={"/"} className="navbar-brand"><h1
                                     className="madimi-one-regular main-color">VapeCloudz</h1></Link>
@@ -60,10 +40,6 @@ export function NavBar() {
                                         <a href="contact.html" className="nav-item nav-link">Contact</a>
                                     </div>
                                     <div className="d-flex m-3 me-0">
-                                        <button
-                                            className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
-                                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                            className="fas fa-search main-color"></i></button>
                                         <a href="#" className="position-relative me-4 my-auto">
                                             <i className="fa fa-shopping-bag fa-2x main-color"></i>
                                             <span
@@ -75,33 +51,22 @@ export function NavBar() {
                                                     minWidth: "20px"
                                                 }}>3</span>
                                         </a>
-                                        <a href="#" className="my-auto">
+                                        <Link to={"/login"} className="my-auto">
                                             <i className="fas fa-user fa-2x main-color"></i>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </nav>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="modal fade" id="searchModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content rounded-0">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Search products</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body d-flex align-items-center">
-                            <div className="input-group w-75 mx-auto d-flex">
-                                <input type="search" className="form-control p-3" aria-describedby="search-icon-1"/>
-                                <button id="search-icon-1" className="input-group-text p-3"><i
-                                    className="fa fa-search"></i></button>
+                        <form>
+                            <div className="input-group mb-3">
+                                <input type="text" className="form-control" aria-label="Recipient's username"
+                                       aria-describedby="button-addon2"/>
+                                <button className="btn btn-outline-secondary main-bg text-light" type="button"
+                                        id="button-addon2">Search
+                                </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
