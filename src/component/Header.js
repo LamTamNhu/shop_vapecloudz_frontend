@@ -1,14 +1,16 @@
-import '../css/navbar.css'
 import {Link} from "react-router-dom";
 
 export function Header() {
     return (
         <>
-            <div className="container-fluid mb-3">
+            <div className="container-fluid mb-3 sticky-top bg-white">
                 <div className="row">
-                    <img style={{maxWidth: "200px"}} className="col-2"
-                         src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
-                         alt="error"/>
+                    <Link className="col-2" to={"/"}>
+                        <img style={{maxWidth: "200px"}}
+                             src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
+                             alt="error"/>
+                    </Link>
+
                     <div className="col px-5">
                         <div className="container">
                             <nav className="navbar navbar-light bg-white navbar-expand-xl">
@@ -41,15 +43,9 @@ export function Header() {
                                     </div>
                                     <div className="d-flex m-3 me-0">
                                         <a href="#" className="position-relative me-4 my-auto">
-                                            <i className="fa fa-shopping-bag fa-2x main-color"></i>
-                                            <span
-                                                className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                                style={{
-                                                    top: "-5px",
-                                                    left: "15px",
-                                                    height: "20px",
-                                                    minWidth: "20px"
-                                                }}>3</span>
+                                            <Link to={"/cart"}>
+                                                <i className="fa fa-shopping-bag fa-2x main-color"></i>
+                                            </Link>
                                         </a>
                                         <Link to={"/login"} className="my-auto">
                                             <i className="fas fa-user fa-2x main-color"></i>

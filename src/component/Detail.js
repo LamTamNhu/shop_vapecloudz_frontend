@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -148,11 +148,81 @@ export function Detail() {
                         primed
                         your pod, attached it to your device, allow to stand for 5-10 minutes before vaping.</p></div>
                     <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                         tabIndex="0">...
+                         tabIndex="0">
+                        <div className="mb-5">
+                            <div className="d-flex align-items-center pe-5">
+                                <h2 className="me-3">4.9</h2>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-secondary"></i>
+                            </div>
+                            <p className="fst-italic">Based on 3 reviews</p>
+                        </div>
+
+                        <div className="border border-3 rounded-4 p-3 mb-3">
+                            <div className="d-flex justify-content-between mb-2">
+                                <span>John Smith</span>
+                                <span>24/03/2024</span>
+                            </div>
+                            <div className="d-flex pe-5">
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-secondary"></i>
+                            </div>
+                            <hr/>
+                            <p className="mb-3 fw-bold">Great pod</p>
+                            <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                                is an inexpensive and simple
+                                alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                                are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
+                            <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
+                        </div>
+                        <div className="border border-3 rounded-4 p-3 mb-3">
+                            <div className="d-flex justify-content-between mb-2">
+                                <span>John Smith</span>
+                                <span>24/03/2024</span>
+                            </div>
+                            <div className="d-flex pe-5">
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-secondary"></i>
+                            </div>
+                            <hr/>
+                            <p className="mb-3 fw-bold">Great pod</p>
+                            <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                                is an inexpensive and simple
+                                alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                                are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
+                            <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
+                        </div>
+                        <div className="border border-3 rounded-4 p-3 mb-3">
+                            <div className="d-flex justify-content-between mb-2">
+                                <span>John Smith</span>
+                                <span>24/03/2024</span>
+                            </div>
+                            <div className="d-flex pe-5">
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-warning"></i>
+                                <i className="fa-solid fa-star text-secondary"></i>
+                            </div>
+                            <hr/>
+                            <p className="mb-3 fw-bold">Great pod</p>
+                            <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                                is an inexpensive and simple
+                                alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                                are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
+                            <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
         </>
     )
