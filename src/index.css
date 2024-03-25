@@ -201,7 +201,8 @@ h2 {
 }
 
 .navbar {
-    height: 100px;
+    padding-bottom: 0;
+    padding-top: 0;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
