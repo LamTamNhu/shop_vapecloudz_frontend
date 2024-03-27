@@ -29,13 +29,11 @@ export function Header() {
                                     <Link to={"/"} className="nav-item nav-link">Pods</Link>
                                     <Link to={"/"} className="nav-item nav-link">Coils</Link>
                                     <div className="nav-item dropdown">
-                                        <a href="#" className="nav-link dropdown-toggle"
-                                           data-bs-toggle="dropdown">Accessories</a>
+                                        <button className="nav-link dropdown-toggle"
+                                           data-bs-toggle="dropdown">Accessories</button>
                                         <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                                            <a href="cart.html" className="dropdown-item">Cart</a>
-                                            <a href="chackout.html" className="dropdown-item">Chackout</a>
-                                            <a href="testimonial.html" className="dropdown-item">Testimonial</a>
-                                            <a href="404.html" className="dropdown-item">404 Page</a>
+                                            <button className="dropdown-item">Cart</button>
+                                            <button className="dropdown-item">404 Page</button>
                                         </div>
                                     </div>
                                     <a href="contact.html" className="nav-item nav-link">Contact</a>

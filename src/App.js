@@ -7,6 +7,8 @@ import {Footer} from "./component/Footer";
 import {Detail} from "./component/Detail";
 import {Error} from "./component/Error";
 import {Cart} from "./component/Cart";
+import {useState} from "react";
+import Cookies from "universal-cookie";
 
 function App() {
     return (
