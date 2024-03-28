@@ -1,12 +1,13 @@
 import {Field, Form, Formik} from "formik";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {login} from "../service/UserService";
 import {useState} from "react";
-import Cookies from "universal-cookie";
+import {useCookies} from "react-cookie";
 
 export function LoginForm() {
-    const cookie = new Cookies()
+    const [cookies, setCookie, removeCookie] = useCookies()
     const [isLoginFail, setIsLoginFail] = useState(false)
+    const nav = useNavigate()
     const initValue = {
         email: "",
         password: ""
@@ -18,12 +19,12 @@ export function LoginForm() {
                 <div className="col-5">
                     <Formik initialValues={initValue} onSubmit={async (data) => {
                         const result = await login(data)
-                        console.log(result)
                         if (result.status < 400) {
                             const loginData = result.data
-                            cookie.set("accessToken", loginData.accessToken)
-                            cookie.set("username", loginData.username)
-                            cookie.set("role", loginData.role)
+                            setCookie("username", loginData.username)
+                            setCookie("role", loginData.role)
+                            setCookie("accessToken", loginData.accessToken)
+                            nav("/")
                         } else {
                             setIsLoginFail(true)
                         }

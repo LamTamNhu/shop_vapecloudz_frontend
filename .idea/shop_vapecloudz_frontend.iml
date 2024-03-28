@@ -11,6 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="all" level="application" />
     <orderEntry type="library" name="bootstrap-icons" level="application" />
+    <orderEntry type="library" name="font-awesome" level="application" />
   </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="cc9fb4ad-c994-4580-b809-547035b02cbc" />
