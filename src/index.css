@@ -522,15 +522,13 @@ h2 {
 }
 
 /*** Footer End ***/
-.event__search__floater {
-    position: fixed;
-    top: 50px;
-    /*   left:0; */
-    right: 50px;
-    transition: all ease-in-out 0.2s;
-    transform: translate(-50%, -50%);
-}
 
 .header-login-icon:hover {
     color: grey;
+}
+
+.floater-to-top {
+    position: fixed;
+    bottom: 70px;
+    right: 40px;
 }

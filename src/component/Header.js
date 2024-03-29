@@ -91,6 +91,10 @@ export function Header() {
                     </form>
                 </div>
             </div>
+            <button className="btn btn-lg btn-secondary floater-to-top rounded-circle" onClick={()=>{window.scrollTo(0,0)}}>
+                <i className="fa-solid fa-up-long fa-xl"/>
+            </button>
+
         </div>
     )
 }

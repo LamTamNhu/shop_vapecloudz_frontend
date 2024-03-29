@@ -16,3 +16,11 @@ export async function register(data) {
         return e.response
     }
 }
+
+export async function checkEmailDuplicated(email) {
+    try {
+        return await axios.get("http://localhost:8080/api/auth/duplicated?email=" + email)
+    } catch (e) {
+        return e.response
+    }
+}

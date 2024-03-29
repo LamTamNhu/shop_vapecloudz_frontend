@@ -9,6 +9,7 @@ import {Error} from "./component/Error";
 import {Cart} from "./component/Cart";
 import {useState} from "react";
 import Cookies from "universal-cookie";
+import ItemList from "./component/ItemList";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path={"/signup"} element={<SignupForm/>}/>
                 <Route path={"/:id"} element={<Detail/>}/>
                 <Route path={"/cart"} element={<Cart/>}/>
+                <Route path={"/search"} element={<ItemList/>}/>
                 <Route path={"*"} element={<Error/>}/>
             </Routes>
             <Footer/>
