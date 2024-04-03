@@ -24,3 +24,4 @@ export async function checkEmailDuplicated(email) {
         return e.response
     }
 }
+

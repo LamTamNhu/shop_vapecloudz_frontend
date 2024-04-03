@@ -24,6 +24,7 @@ export function LoginForm() {
                             setCookie("username", loginData.username)
                             setCookie("role", loginData.role)
                             setCookie("accessToken", loginData.accessToken)
+                            setCookie("email", loginData.email)
                             nav("/")
                         } else {
                             setIsLoginFail(true)

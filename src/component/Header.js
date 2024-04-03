@@ -1,18 +1,27 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useCookies} from "react-cookie";
 
 export function Header() {
     const [cookie, setCookie, removeCookie] = useCookies();
+    const nav = useNavigate()
 
     function logout() {
         removeCookie("username")
         removeCookie("role")
         removeCookie("accessToken")
+        removeCookie("email")
+    }
+
+    function searchHandler() {
+        const input = document.getElementById("searchInput").value
+        console.log(input)
+        nav("/search?name=" + input)
+        // nav(0)
     }
 
     return (
-        <div className="container-fluid sticky-top bg-white">
+        <div className="container-fluid sticky-top bg-white mb-3">
             <div className="row">
                 <Link className="col-1 d-flex align-items-center p-0" to={"/"}>
                     <img className="img-fluid"
@@ -80,21 +89,21 @@ export function Header() {
                             </div>
                         </div>
                     </nav>
-                    <form className="nav-item">
-                        <div className="input-group mb-2">
-                            <input type="text" className="form-control" aria-label="Recipient's username"
-                                   aria-describedby="button-addon2"/>
-                            <button className="btn btn-outline-secondary main-bg text-light" type="button"
-                                    id="button-addon2">Search
+                    <div className="row g-1 mb-2 nav-item">
+                        <div className="col"></div>
+                        <div className="col-5">
+                            <input type="text" className="form-control" id="searchInput"/>
+                        </div>
+                        <div className="col">
+                            <button onClick={(event) => {
+                                event.preventDefault()
+                                searchHandler()
+                            }} className="btn btn-outline-secondary main-bg text-light">Search
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-            <button className="btn btn-lg btn-secondary floater-to-top rounded-circle" onClick={()=>{window.scrollTo(0,0)}}>
-                <i className="fa-solid fa-up-long fa-xl"/>
-            </button>
-
         </div>
     )
 }
