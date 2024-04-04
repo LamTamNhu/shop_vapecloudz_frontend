@@ -5,9 +5,11 @@ import {findItemById} from "../service/ItemService";
 import Swal from "sweetalert2";
 import {FadeLoader} from "react-spinners";
 
-export default function ItemDetail() {
+export default function ItemDetail({updateCart}) {
     const params = useParams()
     const [item, setItem] = useState(null)
+    const [selectedVariant, setSelectedVariant] = useState(null)
+    const [amount, setAmount] = useState(1)
     const nav = useNavigate()
     const setting = {
         arrows: true,
@@ -26,13 +28,37 @@ export default function ItemDetail() {
                 }
             }
             await Swal.fire({
-                title: "Product removed!",
+                title: "Product not found!",
                 icon: "error"
             }).then(() => nav("/"));
         }
 
         fetchApi()
     }, []);
+
+    function handleSelected(variant) {
+        if (selectedVariant === variant) {
+            setSelectedVariant(null)
+            return
+        }
+        setSelectedVariant(variant)
+    }
+
+    function handleAmountOnclick(isPlus) {
+        if (isPlus) {
+            setAmount(amount + 1)
+        } else {
+            if (amount <= 1) {
+                return
+            }
+            setAmount(amount - 1)
+        }
+    }
+
+    function addToCart() {
+        updateCart()
+    }
+
     return (
         <>
             {item == null
@@ -43,47 +69,58 @@ export default function ItemDetail() {
                         <div className="col-5">
                             <Slider {...setting}>
                                 <div>
-                                    <img
-                                        src="https://cdn.vapestore.co.uk/media/catalog/product/cache/312af16b4230f9639b105af4a9030f8d/s/m/smok-nord-gt-kit-black-gun-metal.jpg"
-                                        alt="what the hoi"/>
+                                    <img className="img-fluid" src={item.itemDTO.imageUrl} alt="..."/>
                                 </div>
-                                <div>
-                                    <img
-                                        src="https://cdn.vapestore.co.uk/media/catalog/product/cache/312af16b4230f9639b105af4a9030f8d/s/m/smok-nord-gt-kit-black-gun-metal.jpg"
-                                        alt="what the hoi"/>
-                                </div>
-                                <div>
-                                    <img
-                                        src="https://cdn.vapestore.co.uk/media/catalog/product/cache/312af16b4230f9639b105af4a9030f8d/s/m/smok-nord-gt-kit-black-gun-metal.jpg"
-                                        alt="what the hoi"/>
-                                </div>
-                                <div>
-                                    <img
-                                        src="https://cdn.vapestore.co.uk/media/catalog/product/cache/312af16b4230f9639b105af4a9030f8d/s/m/smok-nord-gt-kit-black-gun-metal.jpg"
-                                        alt="what the hoi"/>
-                                </div>
+                                {item.itemVariantDTOS.map((variant) => (
+                                    <div key={variant.id}>
+                                        <img className="img-fluid" src={variant.itemImage.url} alt="..."/>
+                                    </div>
+                                ))}
                             </Slider>
                         </div>
                         <div className="col-5 ms-5">
-                            <h2>{item.name}</h2>
+                            <h2>{item.itemDTO.name}</h2>
                             <p className="text-success fw-bold">IN STOCK</p>
                             <h3 className="text-danger fw-bold">£29.99</h3>
-                            <p className="fw-bold">Please Choose Colour</p>
+                            <span className="fw-bold">Please Choose Colour </span>
+                            <span
+                                className="text-danger ms-3 fw-bold">{selectedVariant == null ? null : selectedVariant.name}</span>
+                            <div className="row row-cols-6 my-3 gx-2">
+                                {item.itemVariantDTOS.map((variant) => (
+                                    <div onClick={(event) => {
+                                        handleSelected(variant)
+                                    }} className="col" key={variant.id}>
+                                        <button className="btn p-0">
+                                            <img className={
+                                                variant === selectedVariant ? "img-fluid border border-2 rounded-3 border-danger" : "img-fluid border border-2 rounded-3"
+                                            }
+                                                 src={variant.itemImage.url}
+                                                 alt=""/>
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+
                             <div className="input-group quantity mb-5 w-25">
                                 <div className="input-group-btn">
-                                    <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                    <button onClick={() => handleAmountOnclick(false)}
+                                            className="btn btn-sm btn-minus rounded-circle bg-light border">
                                         <i className="fa fa-minus"></i>
                                     </button>
                                 </div>
                                 <input type="text" className="form-control form-control-sm text-center border-0"
-                                       value="1"/>
+                                       value={amount}/>
                                 <div className="input-group-btn">
-                                    <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                    <button onClick={() => handleAmountOnclick(true)}
+                                            className="btn btn-sm btn-plus rounded-circle bg-light border">
                                         <i className="fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
-                            <button className="btn btn-outline-dark btn-lg">ADD TO CART</button>
+                            {selectedVariant == null ?
+                                <button className="btn btn-secondary btn-lg" disabled>ADD TO CART</button> :
+                                <button className="btn btn-dark btn-lg">ADD TO CART</button>}
+
                         </div>
                         <div className="col"/>
                     </div>
@@ -105,7 +142,7 @@ export default function ItemDetail() {
                     <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
                              aria-labelledby="home-tab" tabIndex="0">
-                            <p>{item.description}</p>
+                            <p>{item.itemDTO.description}</p>
                         </div>
                         <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel"
                              aria-labelledby="profile-tab"

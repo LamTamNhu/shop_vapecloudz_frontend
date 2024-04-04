@@ -1,5 +1,9 @@
 import axios from "axios";
-import {useCookies} from "react-cookie";
+
+const cookie = document.cookie
+const config = {
+    headers: {Authorization: `Bearer ${cookie.accessToken}`}
+};
 
 export async function searchItem(query) {
     try {
@@ -25,5 +29,10 @@ export async function findItemById(id) {
     }
 }
 
-export async function getCartCount(email) {
+export async function getCart(email) {
+    try {
+        return await axios.get("http://localhost:8080/api/customer/cart/" + email, config)
+    } catch (e) {
+        return e.response
+    }
 }

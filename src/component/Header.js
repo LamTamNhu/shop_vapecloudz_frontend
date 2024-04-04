@@ -2,7 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useCookies} from "react-cookie";
 
-export function Header() {
+export function Header(cart) {
     const [cookie, setCookie, removeCookie] = useCookies();
     const nav = useNavigate()
 
@@ -21,12 +21,13 @@ export function Header() {
     }
 
     return (
-        <div className="container-fluid sticky-top bg-white mb-3">
+        <div className="container-fluid sticky-top bg-white">
             <div className="row">
-                <Link className="col-1 d-flex align-items-center p-0" to={"/"}>
+                <Link className="col-1 d-flex align-items-center p-0 text-decoration-none" to={"/"}>
                     <img className="img-fluid"
                          src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
                          alt="error"/>
+                    <h1 className="madimi-one-regular main-color d-none d-xl-block">VapeCloudz</h1>
                 </Link>
                 <div className="col">
                     <nav className="navbar navbar-light navbar-expand-xl">
@@ -36,9 +37,6 @@ export function Header() {
                                 <span className="fa fa-bars main-color"></span>
                             </button>
                             <div className="collapse navbar-collapse" id="navbarCollapse">
-                                <Link to={"/"} className="navbar-brand">
-                                    <h1 className="madimi-one-regular main-color">VapeCloudz</h1>
-                                </Link>
                                 <div className="navbar-nav mx-auto">
                                     <Link to={"/"} className="nav-item nav-link">E-Liquid</Link>
                                     <Link to={"/"} className="nav-item nav-link">Disposable Vapes</Link>
