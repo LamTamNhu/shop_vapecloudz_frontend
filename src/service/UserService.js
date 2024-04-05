@@ -17,9 +17,9 @@ export async function register(data) {
     }
 }
 
-export async function checkEmailDuplicated(email) {
+export async function checkDuplicated(username, email) {
     try {
-        return await axios.get("http://localhost:8080/api/auth/duplicated?email=" + email)
+        return await axios.get("http://localhost:8080/api/auth/duplicated?email=" + email + "&username=" + username)
     } catch (e) {
         return e.response
     }

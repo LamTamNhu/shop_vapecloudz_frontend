@@ -1,8 +1,10 @@
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
-import {login} from "../service/UserService";
+import {checkDuplicated, login} from "../service/UserService";
 import {useState} from "react";
 import {useCookies} from "react-cookie";
+import * as Yup from "yup";
+import Swal from "sweetalert2";
 
 export function LoginForm() {
     const [cookies, setCookie, removeCookie] = useCookies()
@@ -12,24 +14,53 @@ export function LoginForm() {
         email: "",
         password: ""
     }
+    const validationObject = {
+        email: Yup.string().required().test(
+            'checkEmailUnique',
+            'No account with this email!',
+            async function validateValue(value) {
+                try {
+                    const result = await checkDuplicated("", value)
+                    return result.data
+                } catch (e) {
+                    await Swal.fire({
+                            icon: "error",
+                            title: "Email checking error, can't connect to server!"
+                        }
+                    )
+                }
+            }
+        )
+    }
+
     return (
         <div className="container">
             <div className="row gx-5">
                 <div className="col"></div>
                 <div className="col-5">
-                    <Formik initialValues={initValue} onSubmit={async (data) => {
-                        const result = await login(data)
-                        if (result.status < 400) {
-                            const loginData = result.data
-                            setCookie("username", loginData.username)
-                            setCookie("role", loginData.role)
-                            setCookie("accessToken", loginData.accessToken)
-                            setCookie("email", loginData.email)
-                            nav("/")
-                        } else {
-                            setIsLoginFail(true)
-                        }
-                    }}>
+                    <Formik initialValues={initValue} validationSchema={Yup.object(validationObject)}
+                            onSubmit={async (data) => {
+                                const result = await login(data)
+                                if (result.status < 400) {
+                                    const loginData = result.data
+                                    setCookie("username", loginData.username)
+                                    setCookie("role", loginData.role)
+                                    setCookie("accessToken", loginData.accessToken)
+                                    setCookie("email", loginData.email)
+                                    nav("/")
+                                } else {
+                                    if (result.status === 403) {
+                                        await Swal.fire({
+                                                icon: "warning",
+                                                title: "This account is banned!"
+                                            }
+                                        )
+                                        setIsLoginFail(false)
+                                        return
+                                    }
+                                    setIsLoginFail(true)
+                                }
+                            }}>
                         <Form>
                             <h2>Login</h2>
                             <h5>Registered Customers</h5>
@@ -38,6 +69,7 @@ export function LoginForm() {
                             <div className="form-floating mb-3">
                                 <Field name="email" type="email" className="form-control rounded-4" id="floatingInput"/>
                                 <label htmlFor="floatingInput">Email address</label>
+                                <ErrorMessage className="text-danger" name="email" component="p"/>
                             </div>
                             <div className="form-floating mb-3">
                                 <Field name="password" type="password" className="form-control rounded-4"
@@ -45,12 +77,11 @@ export function LoginForm() {
                                 <label form="floatingPassword">Password</label>
                             </div>
                             <div className="col">
-                                <button
-                                    className="btn btn-outline-secondary main-bg text-light rounded-5 btn-lg w-50">Login
+                                <button type="submit"
+                                        className="btn btn-outline-secondary main-bg text-light rounded-5 btn-lg w-50">Login
                                 </button>
                             </div>
-                            {isLoginFail ? <p className="text-danger">Wrong email or password!</p> : null}
-
+                            {isLoginFail ? <p className="text-danger">Wrong password!</p> : null}
                         </Form>
                     </Formik>
                 </div>

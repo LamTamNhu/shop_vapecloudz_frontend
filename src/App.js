@@ -10,12 +10,22 @@ import ItemList from "./component/ItemList";
 import ItemDetail from "./component/ItemDetail";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
+import {getCart} from "./service/ItemService";
 
 function App() {
-    const [cart, setCart] = useState(null)
+    const [cart, setCart] = useState([])
     const [cookie, setCookie, removeCookie] = useCookies();
     useEffect(() => {
         async function fetchCartApi() {
+            if (cookie.email == null) {
+                return
+            }
+            const result = await getCart(cookie.email)
+            console.log(result)
+            if (result.status === 200) {
+                const cartData = result.data
+                setCart(cartData)
+            }
         }
 
         fetchCartApi()

@@ -1,7 +1,7 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from 'yup';
 import Swal from "sweetalert2";
-import {checkEmailDuplicated, login, register} from "../service/UserService";
+import {checkDuplicated, login, register} from "../service/UserService";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
@@ -16,14 +16,29 @@ export function SignupForm() {
         confirmPassword: ""
     }
     const validationObject = {
-        username: Yup.string().required().min(2).max(255),
+        username: Yup.string().required().min(2).max(255).test(
+            'checkUsernameUnique',
+            'This username is already taken.',
+            async function validateValue(value) {
+                try {
+                    const result = await checkDuplicated(value, "")
+                    return !result.data
+                } catch (e) {
+                    await Swal.fire({
+                            icon: "error",
+                            title: "Username checking error, can't connect to server!"
+                        }
+                    )
+                }
+            }
+        ),
         birthday: Yup.date().required(),
         email: Yup.string().required().test(
             'checkEmailUnique',
             'This email is already registered.',
             async function validateValue(value) {
                 try {
-                    const result = await checkEmailDuplicated(value)
+                    const result = await checkDuplicated("", value)
                     return !result.data
                 } catch (e) {
                     await Swal.fire({
@@ -47,7 +62,6 @@ export function SignupForm() {
             timerProgressBar: true,
             didOpen: async () => {
                 Swal.showLoading();
-
             }
         })
         const result = await register(data)

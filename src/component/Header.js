@@ -1,11 +1,16 @@
 import {Link, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 
 export function Header(cart) {
     const [cookie, setCookie, removeCookie] = useCookies();
     const nav = useNavigate()
-
+    useEffect(() => {
+        async function fetchApi(){
+            console.log(cart)
+        }
+        fetchApi()
+    }, []);
     function logout() {
         removeCookie("username")
         removeCookie("role")
@@ -29,7 +34,7 @@ export function Header(cart) {
                          alt="error"/>
                     <h1 className="madimi-one-regular main-color d-none d-xl-block">VapeCloudz</h1>
                 </Link>
-                <div className="col">
+                <div className="col pt-3">
                     <nav className="navbar navbar-light navbar-expand-xl">
                         <div className="container-fluid">
                             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
@@ -65,7 +70,8 @@ export function Header(cart) {
                                         : null
                                     : null}
                                 <Link to={"/cart"}>
-                                    <i className="fa fa-shopping-bag fa-2x main-color mx-3"></i>
+                                    <i className="fa fa-shopping-bag fa-2x main-color mx-3"/>
+                                    <span className="text-primary">{cart.length}</span>
                                 </Link>
                                 {cookie.username != null
                                     ?
