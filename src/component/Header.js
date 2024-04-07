@@ -1,16 +1,21 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
+import styles from "../css/header.module.css"
 
-export function Header(cart) {
+export function Header(cartData) {
+    let cart = cartData.cart
     const [cookie, setCookie, removeCookie] = useCookies();
     const nav = useNavigate()
     useEffect(() => {
-        async function fetchApi(){
+        async function fetchApi() {
             console.log(cart)
+            console.log(cart.length)
         }
+
         fetchApi()
-    }, []);
+    }, [cart]);
+
     function logout() {
         removeCookie("username")
         removeCookie("role")
@@ -28,11 +33,17 @@ export function Header(cart) {
     return (
         <div className="container-fluid sticky-top bg-white">
             <div className="row">
-                <Link className="col-1 d-flex align-items-center p-0 text-decoration-none" to={"/"}>
-                    <img className="img-fluid"
-                         src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
-                         alt="error"/>
-                    <h1 className="madimi-one-regular main-color d-none d-xl-block">VapeCloudz</h1>
+                <Link className="col-2 d-flex align-items-center p-0 text-decoration-none" to={"/"}>
+                    <div className="row">
+                        <div className="col-5">
+                            <img className="img-fluid"
+                                 src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
+                                 alt="error"/>
+                        </div>
+                        <div className="col-4 d-flex align-items-center p-0">
+                            <h1 className="madimi-one-regular main-color d-none d-xl-block">VapeCloudz</h1>
+                        </div>
+                    </div>
                 </Link>
                 <div className="col pt-3">
                     <nav className="navbar navbar-light navbar-expand-xl">
@@ -60,19 +71,15 @@ export function Header(cart) {
                                             <button className="dropdown-item">Cotton Wick</button>
                                         </div>
                                     </div>
-
                                 </div>
                                 {cookie.role != null
                                     ? cookie.role.includes("ADMIN")
-                                        ? <button className="btn btn-outline-secondary text-light main-bg rounded-5">
+                                        ?
+                                        <button className="btn btn-outline-secondary text-light main-bg rounded-5 me-3">
                                             Admin Panel
                                         </button>
                                         : null
                                     : null}
-                                <Link to={"/cart"}>
-                                    <i className="fa fa-shopping-bag fa-2x main-color mx-3"/>
-                                    <span className="text-primary">{cart.length}</span>
-                                </Link>
                                 {cookie.username != null
                                     ?
                                     <div className="nav-item dropdown">
@@ -90,6 +97,10 @@ export function Header(cart) {
                                         <i className="fas fa-user fa-2x main-color"></i>
                                     </Link>
                                 }
+                                <Link className="text-decoration-none" to={"/cart"}>
+                                    <i className="fa fa-shopping-bag fa-2x main-color mx-3"/>
+                                    {cart.length > 0 ? <span className={styles.itemCount}>{cart.length}</span> : null}
+                                </Link>
                             </div>
                         </div>
                     </nav>

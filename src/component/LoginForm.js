@@ -43,10 +43,10 @@ export function LoginForm() {
                                 const result = await login(data)
                                 if (result.status < 400) {
                                     const loginData = result.data
-                                    setCookie("username", loginData.username)
-                                    setCookie("role", loginData.role)
-                                    setCookie("accessToken", loginData.accessToken)
-                                    setCookie("email", loginData.email)
+                                    setCookie("username", loginData.username, {path: "/"})
+                                    setCookie("role", loginData.role, {path: "/"})
+                                    setCookie("accessToken", loginData.accessToken, {path: "/"})
+                                    setCookie("email", loginData.email, {path: "/"})
                                     nav("/")
                                 } else {
                                     if (result.status === 403) {

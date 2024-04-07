@@ -4,8 +4,10 @@ import {useEffect, useState} from "react";
 import {findItemById} from "../service/ItemService";
 import Swal from "sweetalert2";
 import {FadeLoader} from "react-spinners";
+import {useCookies} from "react-cookie";
 
 export default function ItemDetail({updateCart}) {
+    const [cookie, setCookie, removeCookie] = useCookies();
     const params = useParams()
     const [item, setItem] = useState(null)
     const [selectedVariant, setSelectedVariant] = useState(null)
@@ -56,7 +58,11 @@ export default function ItemDetail({updateCart}) {
     }
 
     function addToCart() {
-        updateCart()
+        if (cookie.email == null) {
+            nav("/login")
+            return
+        }
+        updateCart(selectedVariant.id, amount)
     }
 
     return (
@@ -119,8 +125,8 @@ export default function ItemDetail({updateCart}) {
                             </div>
                             {selectedVariant == null ?
                                 <button className="btn btn-secondary btn-lg" disabled>ADD TO CART</button> :
-                                <button className="btn btn-dark btn-lg">ADD TO CART</button>}
-
+                                <button onClick={() => addToCart()} className="btn btn-dark btn-lg">ADD TO
+                                    CART</button>}
                         </div>
                         <div className="col"/>
                     </div>

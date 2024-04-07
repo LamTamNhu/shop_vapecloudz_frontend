@@ -1,243 +1,88 @@
-export function Cart() {
+import {Link} from "react-router-dom";
+
+export function Cart(cartData) {
+    let cart = cartData.cart
+
+    function handleAmountOnclick(isPlus) {
+        if (isPlus) {
+        } else {
+        }
+
+    }
+
     return (
         <>
             <div className="container">
                 <div className="row">
                     <div className="col-xl-8">
-                        <div className="card border shadow-none">
-                            <div className="card-body">
-
-                                <div className="d-flex align-items-start border-bottom pb-3">
-                                    <div className="me-4">
-                                        <img src="https://www.bootdey.com/image/380x380/008B8B/000000" alt=""
-                                             className="avatar-lg rounded w-25"/>
-                                    </div>
-                                    <div className="flex-grow-1 align-self-center overflow-hidden">
-                                        <div>
-                                            <h5 className="text-truncate font-size-18"><a href="#"
-                                                                                          className="text-dark">Waterproof
-                                                Mobile Phone </a></h5>
-                                            <p className="text-muted mb-0">
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star-half text-warning"></i>
-                                            </p>
-                                            <p className="mb-0 mt-1">Color : <span className="fw-medium">Gray</span></p>
+                        {cart.map((item) => (
+                            <div className="card border shadow-none mb-3">
+                                <div className="card-body">
+                                    <div className="d-flex align-items-start border-bottom pb-3">
+                                        <div className="me-4">
+                                            <img src={item.itemVariant.itemImage.url} alt=""
+                                                 className="avatar-lg rounded w-25"/>
                                         </div>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <ul className="list-inline mb-0 font-size-16">
-                                            <li className="list-inline-item">
-                                                <a href="#" className="text-muted px-1">
-                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                </a>
-                                            </li>
-                                            <li className="list-inline-item">
-                                                <a href="#" className="text-muted px-1">
-                                                    <i className="mdi mdi-heart-outline"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Price</p>
-                                                <h5 className="mb-0 mt-2"><span className="text-muted me-2"><del
-                                                    className="font-size-16 fw-normal">$500</del></span>$450
+                                        <div className="flex-grow-1 align-self-center overflow-hidden">
+                                            <div>
+                                                <h5 className="text-truncate font-size-18">
+                                                    <Link className="text-decoration-none text-dark"
+                                                          to={`/product/${item.itemVariant.item.id}`}>
+                                                        {item.itemVariant.item.name}
+                                                    </Link>
                                                 </h5>
+                                                <p className="mb-0 mt-1">{item.itemVariant.name}</p>
                                             </div>
                                         </div>
-                                        <div className="col-md-5">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Quantity</p>
-                                                <div className="d-inline-flex">
-                                                    <select className="form-select form-select-sm w-xl">
-                                                        <option value="1">1</option>
-                                                        <option value="2" selected="">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                    </select>
+                                    </div>
+                                    <div>
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <div className="mt-3">
+                                                    <p className="text-secondary mb-2">Price</p>
+                                                    <h5 className="mb-0 mt-2"><span className="text-secondary me-2"><del
+                                                        className="font-size-16 fw-normal">$500</del></span>$450
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-5">
+                                                <div className="mt-3">
+                                                    <p className="text-secondary mb-2">Quantity</p>
+                                                    <div className="input-group w-50">
+                                                        <div className="input-group-btn">
+                                                            <button onClick={() => handleAmountOnclick(false)}
+                                                                    className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                                <i className="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text"
+                                                               className="form-control form-control-sm text-center border-0"
+                                                               value={item.amount}/>
+                                                        <div className="input-group-btn">
+                                                            <button onClick={() => handleAmountOnclick(true)}
+                                                                    className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                                <i className="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-3">
+                                                <div className="mt-3">
+                                                    <p className="text-secondary mb-2">Total</p>
+                                                    <h5>$900</h5>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-md-3">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Total</p>
-                                                <h5>$900</h5>
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
+                        ))}
 
-                        <div className="card border shadow-none">
-                            <div className="card-body">
-
-                                <div className="d-flex align-items-start border-bottom pb-3">
-                                    <div className="me-4">
-                                        <img src="https://www.bootdey.com/image/380x380/FF00FF/000000" alt=""
-                                             className="avatar-lg rounded w-25"/>
-                                    </div>
-                                    <div className="flex-grow-1 align-self-center overflow-hidden">
-                                        <div>
-                                            <h5 className="text-truncate font-size-18"><a href="#"
-                                                                                          className="text-dark">Smartphone
-                                                Dual Camera </a></h5>
-                                            <p className="text-muted mb-0">
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                            </p>
-                                            <p className="mb-0 mt-1">Color : <span className="fw-medium">Green</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <ul className="list-inline mb-0 font-size-16">
-                                            <li className="list-inline-item">
-                                                <a href="#" className="text-muted px-1">
-                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                </a>
-                                            </li>
-                                            <li className="list-inline-item">
-                                                <a href="#" className="text-muted px-1">
-                                                    <i className="mdi mdi-heart-outline"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Price</p>
-                                                <h5 className="mb-0 mt-2"><span className="text-muted me-2"><del
-                                                    className="font-size-16 fw-normal">$280</del></span>$240
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-5">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Quantity</p>
-                                                <div className="d-inline-flex">
-                                                    <select className="form-select form-select-sm w-xl">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3" selected="">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Total</p>
-                                                <h5>$720</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div className="card border shadow-none">
-                            <div className="card-body">
-
-                                <div className="d-flex align-items-start border-bottom pb-3">
-                                    <div className="me-4">
-                                        <img src="https://www.bootdey.com/image/380x380/FF8C00/000000" alt=""
-                                             className="avatar-lg rounded w-25"/>
-                                    </div>
-                                    <div className="flex-grow-1 align-self-center overflow-hidden">
-                                        <div>
-                                            <h5 className="text-truncate font-size-18"><a href="#"
-                                                                                          className="text-dark">Black
-                                                Colour Smartphone </a></h5>
-                                            <p className="text-muted mb-0">
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                                <i className="bx bxs-star text-warning"></i>
-                                            </p>
-                                            <p className="mb-0 mt-1">Color : <span className="fw-medium">Blue</span></p>
-                                        </div>
-                                    </div>
-                                    <div className="flex-shrink-0 ms-2">
-                                        <ul className="list-inline mb-0 font-size-16">
-                                            <li className="list-inline-item">
-                                                <a href="#" className="text-muted px-1">
-                                                    <i className="mdi mdi-trash-can-outline"></i>
-                                                </a>
-                                            </li>
-                                            <li className="list-inline-item">
-                                                <a href="#" className="text-muted px-1">
-                                                    <i className="mdi mdi-heart-outline"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Price</p>
-                                                <h5 className="mb-0 mt-2"><span className="text-muted me-2"><del
-                                                    className="font-size-16 fw-normal">$750</del></span>$950
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-5">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Quantity</p>
-                                                <div className="d-inline-flex">
-                                                    <select className="form-select form-select-sm w-xl">
-                                                        <option value="1" selected="">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <div className="mt-3">
-                                                <p className="text-muted mb-2">Total</p>
-                                                <h5>$950</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                         <div className="row my-4">
                             <div className="col-sm-6">
-                                <a href="ecommerce-products.html" className="btn btn-link text-muted">
+                                <a href="ecommerce-products.html" className="btn btn-link text-secondary">
                                     <i className="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
                             </div>
                             <div className="col-sm-6">
@@ -253,7 +98,8 @@ export function Cart() {
                         <div className="mt-5 mt-lg-0">
                             <div className="card border shadow-none">
                                 <div className="card-header bg-transparent border-bottom py-3 px-4">
-                                    <h5 className="font-size-16 mb-0">Order Summary <span className="float-end">#MN0124</span>
+                                    <h5 className="font-size-16 mb-0">Order Summary <span
+                                        className="float-end">#MN0124</span>
                                     </h5>
                                 </div>
                                 <div className="card-body p-4 pt-2">

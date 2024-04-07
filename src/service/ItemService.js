@@ -15,7 +15,7 @@ export async function searchItem(query) {
 
 export async function addToCart(data) {
     try {
-        await axios.post("http://localhost:8080/api/item/add", data)
+        await axios.post("http://localhost:8080/api/customer/cart/add", data, config)
     } catch (e) {
         return e.response
     }
