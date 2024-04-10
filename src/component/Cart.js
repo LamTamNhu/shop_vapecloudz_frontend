@@ -5,8 +5,10 @@ import {useCookies} from "react-cookie";
 import Swal from "sweetalert2";
 import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import {BeatLoader, CircleLoader} from "react-spinners";
+import {captureOrderBackEnd, createOrderBackEnd} from "../service/CheckOutService";
 
 export function Cart({reloadCart}) {
+
     const [cart, setCart] = useState([])
     const [cookie, setCookie, removeCookie] = useCookies([]);
     const [subTotal, setSubTotal] = useState(0)
@@ -26,12 +28,6 @@ export function Cart({reloadCart}) {
     useEffect(() => {
         fetchApi()
     }, []);
-    useEffect(() => {
-        function log() {
-            console.log("Updated total: " + subTotal)
-        }
-        log()
-    }, [subTotal]);
 
     async function fetchApi() {
         if (cookie.accessToken == null || cookie.email == null) {
@@ -81,47 +77,37 @@ export function Cart({reloadCart}) {
         await reloadCart()
     }
 
-    const onCreateOrder = (data, actions) => {
+    async function createOrder(data, actions) {
         // replace this url with your server
-        return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/create-order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            // use the "body" param to optionally pass additional order information
-            // like product ids and quantities
-            body: JSON.stringify({
-                cart: [
-                    {
-                        sku: "1blwyeo8",
-                        quantity: 2,
-                    },
-                ],
-            }),
-        })
-            .then((response) => response.json())
-            .then((order) => {
-                // Your code here after create the order
-                return order.id;
+        const result = await createOrderBackEnd({totalPrice: subTotal})
+        if (result.status === 200) {
+            console.log(result.data)
+            return result.data
+        }
+    }
 
-            });
+    async function onApprove(data) {
+        // This function captures the funds from the transaction.
+        const result = await captureOrderBackEnd({orderId: data.orderID})
+        if (result.status === 200) {
+            await Toast.fire(
+                {
+                    icon: "success",
+                    title: "Item purchase succeed!"
+                })
+            return result.data
+        }
     }
-    const onApproveOrder = (data, actions) => {
-        // replace this url with your server
-        return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/capture-order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                orderID: data.orderID,
-            }),
-        })
-            .then((response) => response.json())
-            .then((orderData) => {
-                // Your code here after capture the order
-            });
+
+    function onCancelOrder() {
+        console.log("cancel")
+        Toast.fire(
+            {
+                icon: "warning",
+                title: "Payment cancel!"
+            })
     }
+
     return (
         <>
             <div className="container">
@@ -199,9 +185,11 @@ export function Cart({reloadCart}) {
                                     {isPending || subTotal === 0 ?
                                         <BeatLoader color="#36d7b7"/> :
                                         <PayPalButtons
-                                            style={{layout: "vertical"}}
-                                            createOrder={(data, actions) => onCreateOrder(data, actions)}
-                                            onApprove={(data, actions) => onApproveOrder(data, actions)}
+                                            style={{layout: "vertical", shape: "pill"}}
+                                            createOrder={createOrder}
+                                            onApprove={onApprove}
+                                            onCancel={onCancelOrder}
+                                            onError={onCancelOrder}
                                         />}
                                 </div>
                             </div>
@@ -212,9 +200,7 @@ export function Cart({reloadCart}) {
                         <div className="mt-5 mt-lg-0">
                             <div className="card border shadow-none">
                                 <div className="card-header bg-transparent border-bottom py-3 px-4">
-                                    <h5 className="font-size-16 mb-0">Order Summary <span
-                                        className="float-end">#MN0124</span>
-                                    </h5>
+                                    <h5 className="font-size-16 mb-0">Order Summary </h5>
                                 </div>
                                 <div className="card-body p-4 pt-2">
 
@@ -223,19 +209,7 @@ export function Cart({reloadCart}) {
                                             <tbody>
                                             <tr>
                                                 <td>Sub Total :</td>
-                                                <td className="text-end">${subTotal}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shipping Charge :</td>
-                                                <td className="text-end">$ 25</td>
-                                            </tr>
-                                            <tr className="bg-light">
-                                                <th>Total :</th>
-                                                <td className="text-end">
-                                            <span className="fw-bold">
-                                                $ 745.2
-                                            </span>
-                                                </td>
+                                                <td className="text-end fw-bold">${subTotal}</td>
                                             </tr>
                                             </tbody>
                                         </table>

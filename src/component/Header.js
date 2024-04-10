@@ -37,7 +37,7 @@ export function Header({cartLength}) {
                 <Link className="col-2 px-3 text-decoration-none" to={"/"}>
                     <div className="row p-0">
                         <div className="col p-0">
-                            <img className="img-fluid"
+                            <img style={{maxHeight:"100px"}}
                                  src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
                                  alt="error"/>
                         </div>

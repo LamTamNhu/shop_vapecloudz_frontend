@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const accessToken = getCookie("accessToken")
-const config = {
+export const config = {
     headers: {Authorization: `Bearer ${accessToken}`}
 };
 
