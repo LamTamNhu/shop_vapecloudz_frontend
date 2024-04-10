@@ -5,21 +5,38 @@ import {findItemById} from "../service/ItemService";
 import Swal from "sweetalert2";
 import {FadeLoader} from "react-spinners";
 import {useCookies} from "react-cookie";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from 'yup';
 
 export default function ItemDetail({updateCart}) {
     const [cookie, setCookie, removeCookie] = useCookies();
     const params = useParams()
     const [item, setItem] = useState(null)
     const [selectedVariant, setSelectedVariant] = useState(null)
-    const [amount, setAmount] = useState(1)
     const nav = useNavigate()
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+    })
+    const initValues = {
+        value: 1
+    }
+    const validationSchema = Yup.object({
+        value: Yup.number().required().min(1, "Can't be less than 1")
+    })
     const setting = {
         arrows: true,
         dots: true,
         speed: 500,
         slidesToShow: 1,
     }
-
     useEffect(() => {
         async function fetchApi() {
             const result = await findItemById(params.id)
@@ -29,7 +46,7 @@ export default function ItemDetail({updateCart}) {
                     return
                 }
             }
-            await Swal.fire({
+            await Toast.fire({
                 title: "Product not found!",
                 icon: "error"
             }).then(() => nav("/"));
@@ -46,23 +63,16 @@ export default function ItemDetail({updateCart}) {
         setSelectedVariant(variant)
     }
 
-    function handleAmountOnclick(isPlus) {
-        if (isPlus) {
-            setAmount(amount + 1)
-        } else {
-            if (amount <= 1) {
-                return
-            }
-            setAmount(amount - 1)
-        }
-    }
-
-    function addToCart() {
+    function addToCart(amount) {
         if (cookie.email == null) {
             nav("/login")
             return
         }
         updateCart(selectedVariant.id, amount)
+        Toast.fire({
+            icon: 'success',
+            title: 'Item added to cart',
+        })
     }
 
     return (
@@ -106,27 +116,41 @@ export default function ItemDetail({updateCart}) {
                                     </div>
                                 ))}
                             </div>
-
-                            <div className="input-group quantity mb-5 w-25">
-                                <div className="input-group-btn">
-                                    <button onClick={() => handleAmountOnclick(false)}
-                                            className="btn btn-sm btn-minus rounded-circle bg-light border">
-                                        <i className="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" className="form-control form-control-sm text-center border-0"
-                                       value={amount}/>
-                                <div className="input-group-btn">
-                                    <button onClick={() => handleAmountOnclick(true)}
-                                            className="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i className="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            {selectedVariant == null ?
-                                <button className="btn btn-secondary btn-lg" disabled>ADD TO CART</button> :
-                                <button onClick={() => addToCart()} className="btn btn-dark btn-lg">ADD TO
-                                    CART</button>}
+                            <Formik initialValues={initValues}
+                                    onSubmit={(values) => {
+                                        addToCart(values.value)
+                                    }} validationSchema={validationSchema}>
+                                {({setFieldValue, values}) =>
+                                    <Form>
+                                        <div className="input-group mb-5 w-25">
+                                            <div className="input-group-btn">
+                                                <button type="button" onClick={async () => {
+                                                    await setFieldValue("value", --values.value)
+                                                }}
+                                                        className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                    <i className="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                            <Field id="value" type="text"
+                                                   className="form-control form-control-sm text-center border-0"
+                                                   name="value"/>
+                                            <div className="input-group-btn">
+                                                <button type="button"
+                                                        onClick={async () => {
+                                                            await setFieldValue("value", ++values.value)
+                                                        }}
+                                                        className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                    <i className="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <ErrorMessage name="value" className="text-danger" component="p"></ErrorMessage>
+                                        {selectedVariant == null ?
+                                            <button className="btn btn-secondary btn-lg" disabled>ADD TO CART</button> :
+                                            <button type="submit" className="btn btn-dark btn-lg">ADD TO
+                                                CART</button>}
+                                    </Form>}
+                            </Formik>
                         </div>
                         <div className="col"/>
                     </div>

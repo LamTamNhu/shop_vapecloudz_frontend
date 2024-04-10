@@ -59,8 +59,8 @@ export default function ItemList() {
                         : <h2 className="text-danger">No match found</h2>}
                     <div className="row row-cols-4 g-4">
                         {itemPage.map((item) => (
-                            <Link to={`/product/${item.itemId}`} className="text-decoration-none">
-                                <div className={`card col border-0 ${styles.card}`} key={item.itemId}>
+                            <Link key={item.itemId} to={`/product/${item.itemId}`} className="text-decoration-none">
+                                <div className={`card col border-0 ${styles.card}`}>
                                     <img
                                         src={item.url}
                                         className="card-img-top card-img-bottom" alt="..."/>

@@ -1,22 +1,134 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {editCart, getCart} from "../service/ItemService";
+import {useCookies} from "react-cookie";
+import Swal from "sweetalert2";
+import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
+import {BeatLoader, CircleLoader} from "react-spinners";
 
-export function Cart(cartData) {
-    let cart = cartData.cart
-
-    function handleAmountOnclick(isPlus) {
-        if (isPlus) {
-        } else {
+export function Cart({reloadCart}) {
+    const [cart, setCart] = useState([])
+    const [cookie, setCookie, removeCookie] = useCookies([]);
+    const [subTotal, setSubTotal] = useState(0)
+    const [{isPending}] = usePayPalScriptReducer();
+    const nav = useNavigate()
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+    })
+    useEffect(() => {
+        fetchApi()
+    }, []);
+    useEffect(() => {
+        function log() {
+            console.log("Updated total: " + subTotal)
         }
+        log()
+    }, [subTotal]);
 
+    async function fetchApi() {
+        if (cookie.accessToken == null || cookie.email == null) {
+            nav("/login")
+            return
+        }
+        const result = await getCart(cookie.email)
+        if (result.status === 200) {
+            setCart(result.data)
+            let sum = 0
+            result.data.forEach((item) => {
+                sum += item.itemVariant.price * item.amount
+            })
+            setSubTotal(Number(sum.toFixed(2)))
+        }
     }
 
+    async function updateValue(id, item, isRemove) {
+        const target = document.getElementById(id)
+        if (target.value < 1 || isRemove) {
+            const result = await Swal.fire({
+                title: "Remove " + item.itemVariant.item.name + " from your cart?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, remove it!"
+            })
+            if (!result.isConfirmed) {
+                target.value = 1
+                return
+            } else {
+                await Toast.fire(
+                    {
+                        icon: "warning",
+                        title: "Item removed"
+                    }
+                )
+            }
+        }
+        const data = {
+            cartId: item.id,
+            amount: isRemove ? 0 : target.value,
+        }
+        await editCart(data)
+        await fetchApi()
+        await reloadCart()
+    }
+
+    const onCreateOrder = (data, actions) => {
+        // replace this url with your server
+        return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/create-order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // use the "body" param to optionally pass additional order information
+            // like product ids and quantities
+            body: JSON.stringify({
+                cart: [
+                    {
+                        sku: "1blwyeo8",
+                        quantity: 2,
+                    },
+                ],
+            }),
+        })
+            .then((response) => response.json())
+            .then((order) => {
+                // Your code here after create the order
+                return order.id;
+
+            });
+    }
+    const onApproveOrder = (data, actions) => {
+        // replace this url with your server
+        return fetch("https://react-paypal-js-storybook.fly.dev/api/paypal/capture-order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                orderID: data.orderID,
+            }),
+        })
+            .then((response) => response.json())
+            .then((orderData) => {
+                // Your code here after capture the order
+            });
+    }
     return (
         <>
             <div className="container">
                 <div className="row">
                     <div className="col-xl-8">
                         {cart.map((item) => (
-                            <div className="card border shadow-none mb-3">
+                            <div className="card border shadow-none mb-3" key={item.id}>
                                 <div className="card-body">
                                     <div className="d-flex align-items-start border-bottom pb-3">
                                         <div className="me-4">
@@ -31,47 +143,44 @@ export function Cart(cartData) {
                                                         {item.itemVariant.item.name}
                                                     </Link>
                                                 </h5>
-                                                <p className="mb-0 mt-1">{item.itemVariant.name}</p>
+                                                <p className="main-color mb-0 mt-1">{item.itemVariant.name}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div>
                                         <div className="row">
-                                            <div className="col-md-4">
+                                            <div className="col">
                                                 <div className="mt-3">
                                                     <p className="text-secondary mb-2">Price</p>
-                                                    <h5 className="mb-0 mt-2"><span className="text-secondary me-2"><del
-                                                        className="font-size-16 fw-normal">$500</del></span>$450
+                                                    <h5 className="mb-0 mt-2">${item.itemVariant.price}
                                                     </h5>
                                                 </div>
                                             </div>
-                                            <div className="col-md-5">
+                                            <div className="col">
                                                 <div className="mt-3">
                                                     <p className="text-secondary mb-2">Quantity</p>
-                                                    <div className="input-group w-50">
-                                                        <div className="input-group-btn">
-                                                            <button onClick={() => handleAmountOnclick(false)}
-                                                                    className="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                                <i className="fa fa-minus"></i>
-                                                            </button>
-                                                        </div>
-                                                        <input type="text"
-                                                               className="form-control form-control-sm text-center border-0"
-                                                               value={item.amount}/>
-                                                        <div className="input-group-btn">
-                                                            <button onClick={() => handleAmountOnclick(true)}
-                                                                    className="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                                <i className="fa fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                    <input type="number" id={item.itemVariant.id}
+                                                           onChange={async (event) =>
+                                                               await updateValue(item.itemVariant.id, item)
+                                                           }
+                                                           className="form-control form-control-sm text-center w-50"
+                                                           defaultValue={item.amount}/>
                                                 </div>
                                             </div>
-                                            <div className="col-md-3">
+                                            <div className="col">
                                                 <div className="mt-3">
                                                     <p className="text-secondary mb-2">Total</p>
-                                                    <h5>$900</h5>
+                                                    <h5>${(item.itemVariant.price * item.amount).toFixed(2)}</h5>
                                                 </div>
+                                            </div>
+                                            <div className="col-2 p-3 text-end">
+                                                <a href={"#"}>
+                                                    <i className="fa-solid fa-x fa-xl text-danger"
+                                                       onClick={async (event) => {
+                                                           await updateValue(item.itemVariant.id, item, true)
+                                                       }}>
+                                                    </i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -86,9 +195,14 @@ export function Cart(cartData) {
                                     <i className="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
                             </div>
                             <div className="col-sm-6">
-                                <div className="text-sm-end mt-2 mt-sm-0">
-                                    <a href="ecommerce-checkout.html" className="btn btn-success">
-                                        <i className="mdi mdi-cart-outline me-1"></i> Checkout </a>
+                                <div className="text-end mt-2 mt-sm-0">
+                                    {isPending || subTotal === 0 ?
+                                        <BeatLoader color="#36d7b7"/> :
+                                        <PayPalButtons
+                                            style={{layout: "vertical"}}
+                                            createOrder={(data, actions) => onCreateOrder(data, actions)}
+                                            onApprove={(data, actions) => onApproveOrder(data, actions)}
+                                        />}
                                 </div>
                             </div>
                         </div>
@@ -109,19 +223,11 @@ export function Cart(cartData) {
                                             <tbody>
                                             <tr>
                                                 <td>Sub Total :</td>
-                                                <td className="text-end">$ 780</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Discount :</td>
-                                                <td className="text-end">- $ 78</td>
+                                                <td className="text-end">${subTotal}</td>
                                             </tr>
                                             <tr>
                                                 <td>Shipping Charge :</td>
                                                 <td className="text-end">$ 25</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Estimated Tax :</td>
-                                                <td className="text-end">$ 18.20</td>
                                             </tr>
                                             <tr className="bg-light">
                                                 <th>Total :</th>

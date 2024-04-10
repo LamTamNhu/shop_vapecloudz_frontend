@@ -21,6 +21,14 @@ export async function addToCart(data) {
     }
 }
 
+export async function editCart(data) {
+    try {
+        await axios.post("http://localhost:8080/api/customer/cart/edit", data, config)
+    } catch (e) {
+        return e.response
+    }
+}
+
 export async function findItemById(id) {
     try {
         return await axios.get("http://localhost:8080/api/item/" + id)
