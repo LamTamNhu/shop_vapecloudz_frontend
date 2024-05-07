@@ -1,17 +1,22 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {checkDuplicated, login} from "../service/UserService";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useCookies} from "react-cookie";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
+import queryString from "query-string";
 
 export function LoginForm({reloadCart}) {
     const [cookies, setCookie, removeCookie] = useCookies()
     const [isLoginFail, setIsLoginFail] = useState(false)
     const nav = useNavigate()
+    const location = useLocation();
+    const {redirect} = queryString.parse(location.search)
 
     useEffect(() => {
+        console.log(redirect)
+
         function checkLogin() {
             if (cookies.accessToken != null) {
                 nav("/")
@@ -57,7 +62,11 @@ export function LoginForm({reloadCart}) {
                                     setCookie("username", loginData.username)
                                     setCookie("role", loginData.role)
                                     setCookie("accessToken", loginData.accessToken)
-                                    nav(0)
+                                    if (redirect != null) {
+                                        nav(redirect)
+                                        return
+                                    }
+                                    nav("/")
                                 } else {
                                     if (result.status === 403) {
                                         await Swal.fire({

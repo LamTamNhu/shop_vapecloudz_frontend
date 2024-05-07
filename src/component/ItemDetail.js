@@ -1,4 +1,4 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import Slider from "react-slick";
 import {useEffect, useState} from "react";
 import {findItemById} from "../service/ItemService";
@@ -14,6 +14,7 @@ export default function ItemDetail({updateCart}) {
     const [item, setItem] = useState(null)
     const [selectedVariant, setSelectedVariant] = useState(null)
     const nav = useNavigate()
+    const location = useLocation();
     const Toast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -39,6 +40,7 @@ export default function ItemDetail({updateCart}) {
     }
     useEffect(() => {
         async function fetchApi() {
+            console.log(location)
             const result = await findItemById(params.id)
             if (result.status === 200) {
                 if (!result.data.isDeleted) {
@@ -65,7 +67,7 @@ export default function ItemDetail({updateCart}) {
 
     function addToCart(amount) {
         if (cookie.email == null) {
-            nav("/login")
+            nav("/login?redirect=" + location.pathname)
             return
         }
         updateCart(selectedVariant.id, amount)
@@ -97,7 +99,7 @@ export default function ItemDetail({updateCart}) {
                         <div className="col-5 ms-5">
                             <h2>{item.itemDTO.name}</h2>
                             <p className="text-success fw-bold">IN STOCK</p>
-                            <h3 className="text-danger fw-bold">£29.99</h3>
+                            <h3 className="text-danger fw-bold"></h3>
                             <span className="fw-bold">Please Choose Colour </span>
                             <span
                                 className="text-danger ms-3 fw-bold">{selectedVariant == null ? null : selectedVariant.name}</span>

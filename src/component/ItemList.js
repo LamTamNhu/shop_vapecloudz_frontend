@@ -20,7 +20,7 @@ export default function ItemList() {
     useEffect(() => {
         async function fetchApi() {
             const result = await searchItem(search)
-            if (result.status < 400) {
+            if (result.status === 200) {
                 setItemPage(result.data.content)
                 setPage(result.data)
             } else {
@@ -67,7 +67,7 @@ export default function ItemList() {
                                     <div className="card-body">
                                         <p className="card-text">{item.itemName}</p>
                                         <div className="d-flex justify-content-between flex-lg-wrap">
-                                            <p className="text-danger fs-5 fw-bold">$4.99</p>
+                                            <p className="text-danger fs-5 fw-bold">{item.price}</p>
                                         </div>
                                     </div>
                                 </div>

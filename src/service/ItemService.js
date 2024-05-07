@@ -7,7 +7,9 @@ export const config = {
 
 export async function searchItem(query) {
     try {
-        return await axios.get("http://localhost:8080/api/item/search" + query)
+        const uri = "http://localhost:8080/api/item/search" + query
+        console.log(uri)
+        return await axios.get(uri)
     } catch (e) {
         return e.response
     }

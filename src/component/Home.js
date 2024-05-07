@@ -7,6 +7,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {searchItem} from "../service/ItemService";
 
 export function Home() {
     const settings = {
@@ -18,6 +20,17 @@ export function Home() {
         slidesToScroll: 3,
         autoplay: true
     };
+    const [newList, setNewList] = useState([])
+    useEffect(() => {
+        async function fetchApi() {
+            const newListResult = await searchItem("?size=4")
+            if (newListResult.status === 200) {
+                setNewList(newListResult.data.content)
+            }
+        }
+
+        fetchApi()
+    }, []);
     return (
         <>
             {/*Main carousel*/}
@@ -104,131 +117,52 @@ export function Home() {
                 </div>
             </div>
             {/*Categories*/}
-            <div className="container" align="center">
-                <h2 className="my-5 main-color">Shop by Category</h2>
+            <div className="container">
+                <h2 className="my-5 main-color text-center">Shop by Category</h2>
+
                 <div className="row">
-                    <div className={`col ${styles.container}`} style={{overflow: "hidden"}}>
+                    <Link to={"/search?category_id=1"} className={`col ${styles.container}`}
+                          style={{overflow: "hidden"}}>
                         <img src={card_1} alt="..."/>
-                    </div>
-                    <div className={`col ${styles.container}`} style={{overflow: "hidden"}}>
+                    </Link>
+                    <Link to={"/search?category_id=2"} className={`col ${styles.container}`}
+                          style={{overflow: "hidden"}}>
                         <img src="https://utphampodsystem.com/wp-content/uploads/2024/01/freebaseee-2-1.png" alt="..."/>
-                    </div>
-                    <div className={`col ${styles.container}`} style={{overflow: "hidden"}}>
+                    </Link>
+                    <Link to={"/search?category_id=3"} className={`col ${styles.container}`}
+                          style={{overflow: "hidden"}}>
                         <img src="https://utphampodsystem.com/wp-content/uploads/2024/01/Pod.png" alt="..."/>
-                    </div>
-                    <div className={`col ${styles.container}`} style={{overflow: "hidden"}}>
+                    </Link>
+                    <Link to={"/search?category_id=4"} className={`col ${styles.container}`}
+                          style={{overflow: "hidden"}}>
                         <img src="https://utphampodsystem.com/wp-content/uploads/2024/01/saleee.png" alt="..."/>
-                    </div>
+                    </Link>
                 </div>
             </div>
             {/*:Products showcase*/}
-            <div className="container mt-3" align="center">
-                <h2 className="my-5 main-color">Bestsellers</h2>
+            <div className="container mt-3">
+                <h2 className="my-5 main-color text-center">New Arrivals</h2>
                 <div className="row row-cols-4 g-4">
-                    <div className="card col border-0">
-                        <img
-                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
+                    {newList.map((item) => (
+                        <Link key={item.itemId} to={`/product/${item.itemId}`} className="text-decoration-none">
+                            <div className={`card col border-0 ${styles.card}`}>
+                                <img
+                                    src={item.url}
+                                    className="card-img-top card-img-bottom" alt="..."/>
+                                <div className="card-body">
+                                    <p className="card-text">{item.itemName}</p>
+                                    <div className="d-flex justify-content-between flex-lg-wrap">
+                                        <p className="text-danger fs-5 fw-bold">{item.price}</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="card col border-0">
-                        <img
-                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card col border-0">
-                        <img
-                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card col border-0">
-                        <img
-                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/s/k/ske-crystal-4-in-1-blue-edition-mix_1.jpg"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
+                        </Link>
+                    ))}
                 </div>
-                <button className="btn btn-outline-warning main-bg text-light rounded">More</button>
-            </div>
-            <div className="container mt-3" align="center">
-                <h2 className="my-5 main-color">New Arrivals</h2>
-                <div className="row row-cols-4 g-4">
-                    <div className="card col border-0">
-                        <img
-                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/r/i/riot-connex-disposable-vape-pineapple-ice_1.jpg"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card col border-0">
-                        <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card col border-0">
-                        <img
-                            src="https://cdn.vapestore.co.uk/media/catalog/product/cache/cb41ec5218bfff5e2585da31e0ee6b84/r/i/riot-connex-disposable-vape-pineapple-ice_1.jpg"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card col border-0">
-                        <img
-                            src="https://utphampodsystem.com/wp-content/uploads/2024/03/kiotviet_199f4db8dc8ce439ecd2d843b5afaf23.png"
-                            className="card-img-top card-img-bottom" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <div className="d-flex justify-content-between flex-lg-wrap">
-                                <p className="text-dark fs-5 fw-bold mb-0">$4.99</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button className="btn btn-outline-warning main-bg text-light rounded">More</button>
+                <Link to={"/search"} className="row justify-content-center text-decoration-none">
+                    <button type="button" className="col-1 btn btn-outline-warning main-bg text-light rounded">More
+                    </button>
+                </Link>
             </div>
             {/*Review carousel*/}
             <div className="slider-container container">
@@ -248,9 +182,11 @@ export function Home() {
                         </div>
                         <hr/>
                         <p className="mb-3 fw-bold">Great pod</p>
-                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal
+                            plus
                             is an inexpensive and simple
-                            alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                            alternative to disposables, but the prefilled pods limited choice and got expensive.
+                            These
                             are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
                         <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
                     </div>
@@ -268,9 +204,11 @@ export function Home() {
                         </div>
                         <hr/>
                         <p className="mb-3 fw-bold">Great pod</p>
-                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal
+                            plus
                             is an inexpensive and simple
-                            alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                            alternative to disposables, but the prefilled pods limited choice and got expensive.
+                            These
                             are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
                         <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
                     </div>
@@ -288,9 +226,11 @@ export function Home() {
                         </div>
                         <hr/>
                         <p className="mb-3 fw-bold">Great pod</p>
-                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal plus
+                        <p className="mb-5  format-content-body">I was delighted when these came out. The crystal
+                            plus
                             is an inexpensive and simple
-                            alternative to disposables, but the prefilled pods limited choice and got expensive. These
+                            alternative to disposables, but the prefilled pods limited choice and got expensive.
+                            These
                             are the solution and they are great! No leaks and easily vape 20ml+ of liquid.</p>
                         <Link to={""} className="text-decoration-none text-secondary">Vaporesso Xros Pro</Link>
                     </div>
@@ -302,33 +242,46 @@ export function Home() {
                 <div className="row row-cols-2 g-4">
                     <div className="col">
                         <h2>Will Vaping Help Me Quit Smoking?</h2>
-                        <p>Vaping is an alternative for smoking that curbs your nicotine cravings without the hundreds
+                        <p>Vaping is an alternative for smoking that curbs your nicotine cravings without the
+                            hundreds
                             of harmful chemicals found in traditional cigarettes. Vaping is designed to be a safer
-                            alternative to smoking that will help you quit smoking. For total beginners, we recommend
+                            alternative to smoking that will help you quit smoking. For total beginners, we
+                            recommend
                             looking at pen style kits as they are simple to use and usually come with everything you
-                            need to get started vaping. We also suggest looking at disposable vapes as they require no
+                            need to get started vaping. We also suggest looking at disposable vapes as they require
+                            no
                             set up and come ready to go straight away. If you’re looking for some more info and help
                             with getting started vaping, contact our customer care team.</p>
                     </div>
                     <div className="col">
                         <h2>Which E-Liquid Should I Use?</h2>
-                        <p>E-Liquids come in loads of different flavours, formulations, and sizes. This means that you
+                        <p>E-Liquids come in loads of different flavours, formulations, and sizes. This means that
+                            you
                             have plenty of choice to find your favourite all-day vape flavour, however it can be
                             daunting to those that are just starting out. Certain kits work best with specific
                             e-liquids, and so it’s important to get the right e-liquid formulation. When it comes to
-                            lower powered kits such as a lot of pod kits or pen kits, then high PG is the best e-liquid
-                            to use, however for those wanting to use a higher powered kit, then high VG (also know as
-                            sub ohm e-liquid) is what you’ll want. There is also the option to use 50/50 e-liquid which
+                            lower powered kits such as a lot of pod kits or pen kits, then high PG is the best
+                            e-liquid
+                            to use, however for those wanting to use a higher powered kit, then high VG (also know
+                            as
+                            sub ohm e-liquid) is what you’ll want. There is also the option to use 50/50 e-liquid
+                            which
                             is super versatile and can be used in almost any type of kit.</p>
                     </div>
                     <div className="col">
                         <h2>Which Vape Kit Should I Choose?</h2>
-                        <p>The vape kit that is right for you is totally down to your personal preference when it comes
-                            to convenience, performance, and nicotine strength choice. For those that are looking for a
-                            kit that’s ease and simple to use, we recommend a refillable pod kit or pre-filled pod kit.
-                            Disposable vapes are also a straightforward way to get into vaping as they come pre-filled,
-                            pre-charged and ready to go straight out the box. If you’re looking for maximum flavour and
-                            cloud production then a more advanced sub ohm style kit will be the one for you. These kits
+                        <p>The vape kit that is right for you is totally down to your personal preference when it
+                            comes
+                            to convenience, performance, and nicotine strength choice. For those that are looking
+                            for a
+                            kit that’s ease and simple to use, we recommend a refillable pod kit or pre-filled pod
+                            kit.
+                            Disposable vapes are also a straightforward way to get into vaping as they come
+                            pre-filled,
+                            pre-charged and ready to go straight out the box. If you’re looking for maximum flavour
+                            and
+                            cloud production then a more advanced sub ohm style kit will be the one for you. These
+                            kits
                             range from all-in-one kits that come with everything you need, to more powerful box mods
                             that you can customise with different vape tanks and vape coils to provide you with an
                             unparalleled vaping experience.</p>
@@ -337,7 +290,8 @@ export function Home() {
                         <h2>How To Choose The Best E-Liquid Flavour</h2>
                         <p>Picking out e-liquids to try is one of the most fun parts of vaping, however it can feel
                             overwhelming with the huge range we have here at Vapestore. There isn’t really a “best”
-                            e-liquid flavour as it’s totally down to each vaper’s personal preference. Some that have
+                            e-liquid flavour as it’s totally down to each vaper’s personal preference. Some that
+                            have
                             made the switch from smoking often opt for a tobacco or a menthol flavour. Other people
                             prefer to go in a totally different direction and go for something fresh and fruity like
                             mango, or raspberry sherbet. There are also some more unique flavour collections such as
@@ -346,23 +300,31 @@ export function Home() {
                     </div>
                     <div className="col">
                         <h2>What Vape Coils Do I Need To Use?</h2>
-                        <p>Vape kits require coils to use, however you need to make sure you’re getting the right coils
-                            for your kit. Most kits have coils that are specifically used for that exact kit, however
-                            some brands have a generic coil that can be used in multiple versions of their kit. Some pod
+                        <p>Vape kits require coils to use, however you need to make sure you’re getting the right
+                            coils
+                            for your kit. Most kits have coils that are specifically used for that exact kit,
+                            however
+                            some brands have a generic coil that can be used in multiple versions of their kit. Some
+                            pod
                             kits come with inbuilt coils in the pods so once you can buy a pack of pods and have the
-                            coils already installed and ready to go. More advanced sub ohm kits usually require specific
+                            coils already installed and ready to go. More advanced sub ohm kits usually require
+                            specific
                             coils that fit with the kit’s tank. If you’re buying a disposable kit, they come with
-                            e-liquid prefilled and coils already in the kit so they’re ready to go straight out the box.
+                            e-liquid prefilled and coils already in the kit so they’re ready to go straight out the
+                            box.
                             We’ve created an easy-to-use coil finder so you can check which coil you need for your
                             kit.</p>
                     </div>
                     <div className="col">
                         <h2>Will Vaping Help Me Quit Smoking?</h2>
-                        <p>Vaping is an alternative for smoking that curbs your nicotine cravings without the hundreds
+                        <p>Vaping is an alternative for smoking that curbs your nicotine cravings without the
+                            hundreds
                             of harmful chemicals found in traditional cigarettes. Vaping is designed to be a safer
-                            alternative to smoking that will help you quit smoking. For total beginners, we recommend
+                            alternative to smoking that will help you quit smoking. For total beginners, we
+                            recommend
                             looking at pen style kits as they are simple to use and usually come with everything you
-                            need to get started vaping. We also suggest looking at disposable vapes as they require no
+                            need to get started vaping. We also suggest looking at disposable vapes as they require
+                            no
                             set up and come ready to go straight away. If you’re looking for some more info and help
                             with getting started vaping, contact our customer care team.</p>
                     </div>

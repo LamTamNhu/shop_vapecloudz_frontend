@@ -11,7 +11,6 @@ export function Header({cartLength}) {
     useEffect(() => {
         function updateCartDisplay() {
             setCartDisplay(cartLength)
-            console.log(cartDisplay)
         }
 
         updateCartDisplay()
@@ -37,7 +36,7 @@ export function Header({cartLength}) {
                 <Link className="col-2 px-3 text-decoration-none" to={"/"}>
                     <div className="row p-0">
                         <div className="col p-0">
-                            <img style={{maxHeight:"100px"}}
+                            <img style={{maxHeight: "100px"}}
                                  src="https://firebasestorage.googleapis.com/v0/b/movie-ticket-f0285.appspot.com/o/logo2-removebg-preview.png?alt=media&token=1c44dede-2227-477f-a2d9-76f4c9dbc09e"
                                  alt="error"/>
                         </div>
@@ -55,12 +54,13 @@ export function Header({cartLength}) {
                             </button>
                             <div className="collapse navbar-collapse" id="navbarCollapse">
                                 <div className="navbar-nav mx-auto">
-                                    <Link to={"/"} className="nav-item nav-link">E-Liquid</Link>
-                                    <Link to={"/"} className="nav-item nav-link">Disposable Vapes</Link>
-                                    <Link to={"/"} className="nav-item nav-link">Vape Kits</Link>
+                                    <Link to={"/search?category_id=1"} className="nav-item nav-link">E-Liquid</Link>
+                                    <Link to={"/search?category_id=2"} className="nav-item nav-link">Disposable
+                                        Vapes</Link>
+                                    <Link to={"/search?category_id=3"} className="nav-item nav-link">Vape Kits</Link>
                                     <Link to={"/"} className="nav-item nav-link">Pod Kits</Link>
                                     <Link to={"/"} className="nav-item nav-link">Tanks</Link>
-                                    <Link to={"/"} className="nav-item nav-link">Pods</Link>
+                                    <Link to={"/search?category_id=4"} className="nav-item nav-link">Pods</Link>
                                     <Link to={"/"} className="nav-item nav-link">Coils</Link>
                                     <div className="nav-item dropdown">
                                         <button className="nav-link dropdown-toggle"
